@@ -1,0 +1,44 @@
+services:
+  # Telegram Bot (Background Worker)
+  - type: worker
+    name: datazo-bot
+    runtime: python
+    pythonVersion: "3.12.9"
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: BOT_USERNAME
+        value: DatazoBot
+      - key: RAPIDAPI_KEY
+        sync: false
+      - key: HORSERACING_API_HOST
+        value: bet365-horseracing-win-eachway.p.rapidapi.com
+      - key: COINPLAY_URL
+        sync: false
+      - key: COINPLAY_REG_URL
+        sync: false
+      - key: ADMIN_IDS
+        sync: false
+      - key: DB_PATH
+        value: users.json
+
+  # HTTP API (Web Service for Mini App)
+  - type: web
+    name: datazo-api
+    runtime: python
+    pythonVersion: "3.12.9"
+    buildCommand: pip install -r requirements.txt
+    startCommand: python api.py
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: RAPIDAPI_KEY
+        sync: false
+      - key: HORSERACING_API_HOST
+        value: bet365-horseracing-win-eachway.p.rapidapi.com
+      - key: PORT
+        value: 8080
